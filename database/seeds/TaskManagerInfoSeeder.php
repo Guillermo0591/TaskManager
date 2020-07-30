@@ -5,7 +5,10 @@ use App\User;
 use App\TaskManager\Models\Role;
 use App\TaskManager\Models\Permission;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use App\TaskManager\Models\Task;
+use App\TaskManager\Models\TaskStatus;
+use App\TaskManager\Models\Tag;
+use App\TaskManager\Models\TagGroup;
 
 class TaskManagerInfoSeeder extends Seeder
 {
@@ -19,9 +22,10 @@ class TaskManagerInfoSeeder extends Seeder
         //User admin
         $useradmin = User::create([
             'name' => 'Admin',
-            'email' => 'guillermo.rdz.91@gmail.com',
+            'email' => 'admin@admin.com',
             'password' => Hash::make('admin1234')
         ]);
+
         $roleadmin = Role::create([
             'name' => 'Admin',
             'description' => 'Admin User',
@@ -30,41 +34,139 @@ class TaskManagerInfoSeeder extends Seeder
 
         $useradmin->roles()->sync([$roleadmin->id]);
 
-        /*
-        $permissionAll = [];
-
-        $permission = Permission::create([
-            'name' => 'List user',
-            'slug' => 'user.list',
-            'desription' => 'List all users'
+        // Standar User
+        $standaruser = User::create([
+            'name' => 'Standard',
+            'email' => 'g_rodriguez@outlook.es',
+            'password' => Hash::make('test1234')
         ]);
 
-        $permissionAll[] = $permission->id;
-
-        $permission = Permission::create([
-            'name' => 'Show user',
-            'slug' => 'user.show',
-            'desription' => 'Show user'
+        $rolestandar = Role::create([
+            'name' => 'Standard',
+            'description' => 'Standard User',
+            'isAdmin' => false
         ]);
 
-        $permissionAll[] = $permission->id;
+        $standaruser->roles()->sync([$rolestandar->id]);
+
+        $permission_standard = [];
 
         $permission = Permission::create([
-            'name' => 'Edit user',
-            'slug' => 'user.edit',
-            'desription' => 'Edit user'
+            'name' => 'List tasks',
+            'slug' => 'task.index',
+            'description' => 'List all tasks'
         ]);
 
-        $permissionAll[] = $permission->id;
+        $permission_standard[] = $permission->id;
 
         $permission = Permission::create([
-            'name' => 'Destroy user',
-            'slug' => 'user.destroy',
-            'desription' => 'Destroy user'
+            'name' => 'Show task',
+            'slug' => 'task.show',
+            'description' => 'Show task'
         ]);
 
-        $permissionAll[] = $permission->id;
+        $permission_standard[] = $permission->id;
 
-        $roleadmin->permissions()->sync($permissionAll);*/
+        $permission = Permission::create([
+            'name' => 'Edit task',
+            'slug' => 'task.edit',
+            'description' => 'Edit task'
+        ]);
+
+        $permission_standard[] = $permission->id;
+
+        $permission = Permission::create([
+            'name' => 'Destroy task',
+            'slug' => 'task.destroy',
+            'description' => 'Destroy task'
+        ]);
+
+        $permission_standard[] = $permission->id;
+
+        $rolestandar->permissions()->sync($permission_standard);
+
+        //Status
+        $tagstatus1 = TaskStatus::create([
+            'name' => 'New',
+            'description' => ''
+        ]);
+
+        $tagstatus2 = TaskStatus::create([
+            'name' => 'In Progress',
+            'description' => ''
+        ]);
+
+        $tagstatus3 = TaskStatus::create([
+            'name' => 'Review',
+            'description' => ''
+        ]);
+
+        $tagstatus4 = TaskStatus::create([
+            'name' => 'Done',
+            'description' => ''
+        ]);
+
+        //Tag groups
+        $taggroup1 = TagGroup::create([
+            'name' => 'Type',
+            'description' => 'Type of the tag'
+            ]
+        );
+
+        $taggroup2 = TagGroup::create([
+                'name' => 'Source',
+                'description' => 'Source where the tag was discovered'
+            ]
+        );
+
+        $taggroup3 = TagGroup::create([
+                'name' => 'Location',
+                'description' => 'Tag place'
+            ]
+        );
+
+        // Tags
+        $tag1 = Tag::create([
+            'name' => 'Fix',
+            'description' => '',
+            'tag_group_id' => 1,
+        ]);
+
+        $tag2 = Tag::create([
+            'name' => 'Improvement',
+            'description' => '',
+            'tag_group_id' => 1,
+        ]);
+
+        $tag3 = Tag::create([
+            'name' => 'New',
+            'description' => '',
+            'tag_group_id' => 1,
+        ]);
+
+        $tag4 = Tag::create([
+            'name' => 'Reported',
+            'description' => '',
+            'tag_group_id' => 2,
+        ]);
+
+        $tag5 = Tag::create([
+            'name' => 'Discovered',
+            'description' => '',
+            'tag_group_id' => 2,
+        ]);
+
+        $tag6 = Tag::create([
+            'name' => 'Internal',
+            'description' => '',
+            'tag_group_id' => 3,
+        ]);
+
+        $tag7 = Tag::create([
+            'name' => 'External',
+            'description' => '',
+            'tag_group_id' => 3,
+        ]);
+
     }
 }
