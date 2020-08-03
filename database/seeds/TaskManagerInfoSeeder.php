@@ -36,7 +36,7 @@ class TaskManagerInfoSeeder extends Seeder
 
         // Standar User
         $standaruser = User::create([
-            'name' => 'Standard',
+            'name' => 'Guillermo Rodriguez',
             'email' => 'g_rodriguez@outlook.es',
             'password' => Hash::make('test1234')
         ]);
@@ -52,9 +52,9 @@ class TaskManagerInfoSeeder extends Seeder
         $permission_standard = [];
 
         $permission = Permission::create([
-            'name' => 'List tasks',
+            'name' => 'List task',
             'slug' => 'task.index',
-            'description' => 'List all tasks'
+            'description' => 'List all task'
         ]);
 
         $permission_standard[] = $permission->id;
